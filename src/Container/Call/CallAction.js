@@ -25,3 +25,48 @@ export const getAllCall = () => (dispatch) => {
         });
       });
   };
+
+  export const getAllCallDetailsById = (id) => (dispatch) => {
+    dispatch({
+      type: types.CALL_DETAILS_BY_ID_REQUEST,
+    });
+    axios
+      .get(`${base_url}/activities/${id}`)
+      .then((res) => {
+        console.log(res);       
+        dispatch({
+          type: types.CALL_DETAILS_BY_ID_SUCCESS,
+          payload: res.data,
+        });
+      })
+      .catch((err) => {
+        console.log(err);
+        dispatch({
+          type: types.CALL_DETAILS_BY_ID_FAILURE,
+          payload: err,
+        });
+      });
+  };
+
+  export const updateCallDetailsById = (id,data) => (dispatch) => {
+    dispatch({
+      type: types.PATCH_CALL_DETAILS_BY_ID_REQUEST,
+    });
+    axios
+      .patch(`${base_url}/activities/${id}`,data)
+      .then((res) => {
+        console.log(res);  
+        dispatch(getAllCall());
+        dispatch({
+          type: types.PATCH_CALL_DETAILS_BY_ID_SUCCESS,
+          payload: res.data,
+        });
+      })
+      .catch((err) => {
+        console.log(err);
+        dispatch({
+          type: types.PATCH_CALL_DETAILS_BY_ID_FAILURE,
+          payload: err,
+        });
+      });
+  };

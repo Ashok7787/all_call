@@ -3,7 +3,14 @@ const initialState = {
  
   fetchAllCallList: false,
   fetchAllCallListError: false,
-  allCallList:[]
+  allCallList:[],
+
+  fetchCallDetailsById: false,
+  fetchCallDetailsByIdError: false,
+
+  callDetails:{},
+  updateCallDetailsById: false,
+  updateCallDetailsByIdError: false,
 
   
 };
@@ -24,6 +31,37 @@ export const callReducer = (state = initialState, action) => {
                 ...state,
                 fetchAllCallList: false,
                 fetchAllCallListError: true,
+              };
+
+              case types.CALL_DETAILS_BY_ID_REQUEST:
+              return { ...state, fetchCallDetailsById: true };
+            case types.CALL_DETAILS_BY_ID_SUCCESS:
+              return {
+                ...state,
+                fetchCallDetailsById: false,
+                callDetails: action.payload,
+              };
+        
+            case types.CALL_DETAILS_BY_ID_FAILURE:
+              return {
+                ...state,
+                fetchCallDetailsById: false,
+                fetchCallDetailsByIdError: true,
+              };
+
+              case types.PATCH_CALL_DETAILS_BY_ID_REQUEST:
+              return { ...state, updateCallDetailsById: true };
+            case types.PATCH_CALL_DETAILS_BY_ID_SUCCESS:
+              return {
+                ...state,
+                updateCallDetailsById: false,
+              };
+        
+            case types.PATCH_CALL_DETAILS_BY_ID_FAILURE:
+              return {
+                ...state,
+                updateCallDetailsById: false,
+                updateCallDetailsByIdError: true,
               };
 
     default:
